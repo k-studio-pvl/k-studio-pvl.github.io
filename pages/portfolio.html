@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>K-STUDIO | Портфолио</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">K-STUDIO</div>
+
+  <!-- BURGER -->
+        <div class="burger" id="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <nav class="nav" id="nav">
+    <a href="../index.html">Главная</a>
+    <a href="team.html">Команда</a>
+    <a href="services.html">Услуги</a>
+    <a href="school-albums.html">Шаблоны</a>
+    <a href="about.html">О нас</a>
+    <a href="contact.html">Контакты</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="section">
+
+  <h1 class="title">Портфолио</h1>
+
+  <p style="color: var(--muted); max-width: 900px; line-height: 1.7;">
+    Здесь собраны наши работы в сфере фото- и видеопродакшна:
+    мероприятия, фотоальбомы, корпоративные съёмки и индивидуальные проекты.
+  </p>
+
+</section>
+
+<!-- FILTERS -->
+<section class="section">
+
+  <div class="portfolio-filters">
+
+    <button class="filter-btn active" data-filter="all">Все</button>
+    <button class="filter-btn" data-filter="events">Мероприятия</button>
+    <button class="filter-btn" data-filter="albums">Фотоальбомы</button>
+    <button class="filter-btn" data-filter="corporate">Корпоративы</button>
+
+  </div>
+
+  <!-- GALLERY -->
+  <div class="portfolio-grid">
+
+    <img src="../assets/images/portfolio/1.jpg" data-category="events" alt="">
+    <img src="../assets/images/portfolio/2.jpg" data-category="events" alt="">
+    <img src="../assets/images/portfolio/3.jpg" data-category="events" alt="">
+    <img src="../assets/images/portfolio/4.jpg" data-category="events" alt="">
+    <img src="../assets/images/portfolio/5.jpg" data-category="events" alt="">
+    <img src="../assets/images/portfolio/6.jpg" data-category="events" alt="">
+    <img src="../assets/images/portfolio/7.jpg" data-category="events" alt="">
+    <img src="../assets/images/portfolio/8.jpg" data-category="events" alt="">
+
+  </div>
+
+</section>
+
+<!-- CASES -->
+<section class="section">
+
+  <h2 class="title">Кейсы проектов</h2>
+
+  <div class="services-grid">
+
+    <div class="service-card">
+      <h3>Школьный выпускной</h3>
+      <p>
+        Полная фото- и видеосъёмка выпускного вечера с последующим монтажом и созданием
+        финального видеоролика и фотоальбома.
+      </p>
+    </div>
+
+    <div class="service-card">
+      <h3>Концертное мероприятие</h3>
+      <p>
+        Репортажная съёмка сцены, артистов и зрителей с акцентом на атмосферу и динамику события.
+      </p>
+    </div>
+
+    <div class="service-card">
+      <h3>Корпоративный ивент</h3>
+      <p>
+        Создание визуального контента для компании: фото + видео для внутреннего и маркетингового использования.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- CTA -->
+<section class="cta">
+
+  <h2>Хочешь попасть в наше портфолио?</h2>
+
+  <p style="color: rgba(255,255,255,0.7); margin-top: 10px;">
+    Давай создадим визуальную историю твоего события
+  </p>
+
+  <a href="contact.html" class="btn">Заказать съёмку</a>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2026 K-STUDIO</p>
+</footer>
+
+<!-- JS FILTER -->
+<script>
+const buttons = document.querySelectorAll('.filter-btn');
+const items = document.querySelectorAll('.portfolio-grid img');
+
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const filter = btn.dataset.filter;
+
+    items.forEach(img => {
+      const category = img.dataset.category;
+
+      if (filter === 'all' || category === filter) {
+        img.style.display = 'block';
+      } else {
+        img.style.display = 'none';
+      }
+    });
+
+  });
+});
+</script>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

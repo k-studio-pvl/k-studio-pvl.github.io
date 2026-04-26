@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>K-STUDIO | Школьные альбомы</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">K-STUDIO</div>
+
+  <!-- BURGER -->
+        <div class="burger" id="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <nav class="nav" id="nav">
+    <a href="../index.html">Главная</a>
+    <a href="team.html">Команда</a>
+    <a href="services.html">Услуги</a>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="about.html">О нас</a>
+    <a href="contact.html">Контакты</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="section">
+
+  <h1 class="title">Школьные фотоальбомы</h1>
+
+  <p style="color: rgba(255,255,255,0.7); max-width: 900px;">
+    Выберите фотоальбом — внутри каждого собраны фотографии конкретного класса.
+  </p>
+
+</section>
+
+<!-- АЛЬБОМЫ (ГРУППЫ) -->
+<section class="section">
+
+  <div class="portfolio-grid">
+
+    <img src="../assets/images/albom/1/1.png" class="album" data-album="0">
+    <img src="../assets/images/albom/2/1.png" class="album" data-album="1">
+    <img src="../assets/images/albom/3/1.png" class="album" data-album="2">
+    <img src="../assets/images/albom/4/1.png" class="album" data-album="3">
+    <!-- <img src="../assets/images/albom/5/1.png" class="album" data-album="4"> -->
+    <!-- <img src="../assets/images/albom/6/1.png" class="album" data-album="4"> -->
+
+  </div>
+
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+
+  <span class="close" id="close">&times;</span>
+
+  <img id="lightbox-img" src="">
+
+  <button class="nav prev" id="prev">&#10094;</button>
+  <button class="nav next" id="next">&#10095;</button>
+
+</div>
+
+<script>
+/* =========================
+   ДАННЫЕ АЛЬБОМОВ
+========================= */
+
+const albums = [
+  [
+    "/assets/images/albom/1/1.png",
+    "/assets/images/albom/1/2.png",
+    "/assets/images/albom/1/3.png",
+    "/assets/images/albom/1/4.png",
+    "/assets/images/albom/1/5.png",
+    "/assets/images/albom/1/6.png",
+    "/assets/images/albom/1/7.png",
+    "/assets/images/albom/1/8.png"
+  ],
+  [
+    "/assets/images/albom/2/1.png",
+    "/assets/images/albom/2/2.png",
+    "/assets/images/albom/2/3.png",
+    "/assets/images/albom/2/4.png",
+    "/assets/images/albom/2/5.png",
+    "/assets/images/albom/2/6.png"
+  ],
+  [
+    "/assets/images/albom/3/1.png",
+    "/assets/images/albom/3/2.png",
+    "/assets/images/albom/3/3.png",
+    "/assets/images/albom/3/4.png",
+    "/assets/images/albom/3/5.png",
+    "/assets/images/albom/3/6.png",
+    "/assets/images/albom/3/7.png",
+    "/assets/images/albom/3/8.png"
+  ],
+  [
+    "/assets/images/albom/4/1.png",
+    "/assets/images/albom/4/2.png",
+    "/assets/images/albom/4/3.png",
+    "/assets/images/albom/4/4.png",
+    "/assets/images/albom/4/5.png",
+    "/assets/images/albom/4/6.png",
+    "/assets/images/albom/4/7.png",
+    "/assets/images/albom/4/8.png"
+  ],
+];
+
+let currentAlbum = [];
+let currentIndex = 0;
+
+/* =========================
+   ЭЛЕМЕНТЫ
+========================= */
+
+const albumButtons = document.querySelectorAll('.album');
+const lightbox = document.getElementById('lightbox');
+const img = document.getElementById('lightbox-img');
+
+const closeBtn = document.getElementById('close');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+
+/* =========================
+   ОТКРЫТИЕ АЛЬБОМА
+========================= */
+
+albumButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+
+    const id = btn.dataset.album;
+
+    currentAlbum = albums[id];
+    currentIndex = 0;
+
+    openLightbox();
+
+  });
+});
+
+function openLightbox() {
+  lightbox.style.display = 'flex';
+  updateImage();
+}
+
+/* =========================
+   ПЕРЕКЛЮЧЕНИЕ
+========================= */
+
+function updateImage() {
+  img.src = currentAlbum[currentIndex];
+}
+
+nextBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % currentAlbum.length;
+  updateImage();
+});
+
+prevBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + currentAlbum.length) % currentAlbum.length;
+  updateImage();
+});
+
+/* =========================
+   ЗАКРЫТИЕ
+========================= */
+
+closeBtn.addEventListener('click', () => {
+  lightbox.style.display = 'none';
+});
+
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) {
+    lightbox.style.display = 'none';
+  }
+});
+
+let startX = 0;
+let endX = 0;
+
+lightbox.addEventListener('touchstart', (e) => {
+  startX = e.changedTouches[0].screenX;
+});
+
+lightbox.addEventListener('touchend', (e) => {
+  endX = e.changedTouches[0].screenX;
+  handleSwipe();
+});
+
+function handleSwipe() {
+  const diff = startX - endX;
+
+  // свайп влево → следующее
+  if (diff > 50) {
+    currentIndex = (currentIndex + 1) % currentAlbum.length;
+    updateImage();
+  }
+
+  // свайп вправо → предыдущее
+  if (diff < -50) {
+    currentIndex = (currentIndex - 1 + currentAlbum.length) % currentAlbum.length;
+    updateImage();
+  }
+}
+</script>
+
+<script src="/js/main.js"></script>
+</body>
+</html>
